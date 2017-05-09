@@ -1,5 +1,7 @@
-import { Component } from "@angular/core";
-
+import { Component,Inject } from "@angular/core";
+import { Logger } from "./services/logger";
+import { Colors } from "./models/colors";
+import { ColorsToken } from "./tokens/colors-token"
 @Component({
     selector: "main",
     template: require("./app.component.html"),
@@ -7,56 +9,12 @@ import { Component } from "@angular/core";
 })
 export class AppComponent {
 
-    public message: string = "color tool";
-    public message2: string ="Hello dunia";
-    public pesan: string="Ganti aku";
-    public colors: string[] = [
-        "red","green","black","orange","blue",
-    ];
-    public newColor:string ="";
+    public colors: String[] = [];  
 
-    public addColor(){
-        this.colors.push(this.newColor);
-        this.newColor="";
-    }
-    public someNumber: number=3.14912091;
-    public someDate: Date = new Date();
-    public someCurrency: number=40000;
-
-    public currentPage: number=0;
-    public pageLength: number=3;
-
-    public get startPerson(): number{
-        return this.currentPage*this.pageLength;
-    }
-    public get endPerson(): number{
-        return (this.currentPage+1)*this.pageLength;
-    }
-
-    public people: any[] = [
-        {fn: "Hasan", ln:"Presley"},
-        {fn: "Luna", ln:"Maya"},
-        {fn: "Ariel", ln:"Peterpan"},
-        {fn: "Andika", ln:"Kangen Band"},
-        {fn: "Luna", ln:"Suamiku"},
-    ];
-    
-    public prevPage(){
-        if(this.currentPage>0){
-            this.currentPage--;
-        }
-    }
-    public nextPage(){
-
-        let pages = this.people.length / this.pageLength;
-
-        if(this.people.length % this.pageLength > 0){
-            pages++;
-        }
-
-        if(this.currentPage < pages){
-            this.currentPage++;
-        }
-        
+    constructor(@Inject(ColorsToken) private colorsSvc: Colors) {
+        this.colorsSvc.addColor("red");
+        this.colorsSvc.addColor("white");
+        this.colorsSvc.addColor("blue");
+        this.colors = this.colorsSvc.getAll();
     }
 }
