@@ -3,3 +3,9 @@ export class Logger{
         console.log(message);
     }
 }
+
+export const simpleLogger = {
+    log: (message: String) => {
+        console.log("Simple Logger", message);
+    },
+}
